@@ -14,34 +14,40 @@ public:
   Complex(double r) : re{r}, im{0} {}
   Complex(double r, double i) : re{r}, im{i} {}
 
-  double r() const{ return re;}
-  double i() const{ return im;}
+  double re() const { return re; }
+  double im() const { return im; }
 
   Complex Conjugate() const
   {
     return {re, -im};
   }
 
-  Complex& operator*=(Complex z) {re=re*z.re-im*z.im, im=im*z.re+re*z.im; return *this;}
+  Complex& operator*=(Complex z) {
+    re= re * z.re - im * z.im;
+    im= im * z.re + re * z.im;
+    return *this;
+  }
 
   Complex& operator/=(Complex operand);
 };
      
     
-Complex operator*(Complex a, Complex b) { return a*=b; }
-Complex operator/(Complex a, Complex b) { return a/=b; }
+Complex operator* (Complex a, Complex b) { return a*=b; }
+Complex operator/ (Complex a, Complex b) { return a/=b; }
 
 Complex& Complex::operator/=(Complex operand){
-  double denominator = ( operand * operand.Conjugate() ).r();
+  double denominator = ( operand * operand.Conjugate() ).re();
   Complex nominator = *this * operand.Conjugate();
   re = nominator.re/denominator;
   im = nominator.im/denominator;
   return *this;
+  // TODO handle divsion by zero with exceptions
 }
 
 // prints complex to stream in a form like 2+3i, 0+0i etc.
 std::ostream& operator<<(std::ostream& os, const Complex& c)
 {
+  //TODO use ostream formatting instead
   os << c.r() << (c.i()>=0 ? "+" : "-") << (c.i()>=0 ? c.i() : -c.i()) << "i";
   return os;
 }
@@ -66,9 +72,13 @@ int main(int argc, char** argv)
   }
 
   Complex a {re, im};
+
   // following line doesn't work because double implicit conversion is not allowed
   // it could be solved in several ways though, creating a Complex(int) constructor one of them
   //std::cout << (1/a) << std::endl;
+
   std::cout << (1.0/a) << std::endl;
+
   return 0;
+
 }
