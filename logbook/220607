@@ -1,0 +1,22 @@
+07.06.2022
+
+    Today I started learning a bit past 1 pm. I was hoping to start much earlier, oh well. I began by creating this repositoryand answering a question about compilers. While finding out what three compilers seem to be most important to know takes not much more than a few seconds, I got curious - what compilers are relevant to mission critical software development in 2022? 
+    Searching for more information, I encountered a short document: https://www.appinf.com/download/SafetyCriticalC++.pdf
+    I decided to take a side quest of reading through it's 5 pages. Mission critical industries created MISRA-C++ (coming from automotiv) and JSF-C++ (avionics) guidelines, both consiting of over 200 rules which are meant to improve safety of C++ code. 
+    Concepts from those guidelines, that the author mentions, are generally in line with writing good, readable, maintainable and extendable application in general, not just in critical mission software. I believe that a decent C++ developer will unwittingly stay within constraints of most MISRA or JSF rules, because they just make sense, 90% of the time. 
+    Interestingly though, MISRA-C++ allows exceptions, but JSF forbids them entirely. 
+    Both standards, as reviewed by the author, are probably obsolete by now due to changes in C++ (they both take some position regarding proper use of null pointer literal, ie. NULL macro or literal 0, when we have nullptr. I would probably need to read up on them myself some time later to see if any or both are up to date with latests C++. 
+    
+    It's 2:30 pm. My goal for today and a bit of tommorrow is getting through chapter 3. I've been through some of it, but I decided to briefly reread that part first. Following are most important notes:
+
+    p. 61 It has to be mentoned, Stroustrup puts emphasis on certain functions needing to and being inlined by default - when in fact this is part of a complex area that compiler optimizations are. Implicit or explicit inlining of a function (including a member function of a class) is not forcing compiler to do anything, it's treated as a suggestion. They keyword has, though, another unrelated effect.
+
+    The `T A::f() const {}` declaration of a function actually makes `this` pointer a pointer to const A. Note that you can't call a non-const function from within const one, unless you do a very ugly const_cast for that purpose, which would make that code a real mess. (So don't.)
+
+    p. 63 recently when I read this kind of simple code, I was tempted to dive deep into a lot of underworkings of it, initialization, handling of references as arguments and return values. It's a rabbit hole, I need to just let it go and I'll get back to it once I reach appropriate part of the book.
+
+    I modified PS1 to green, but I used a hacky fast tutorial, so I need TODO it properly later.  
+
+    Github uses personal authentication tokens now. TODO - get that to work automagically locally, so I don't have to keep copy and paste those with every push.
+
+    Consider a class that can be constructed with an int to specify some parameter, or with a std::initializer_list to take braced parentheses syntax like this: A a {1, 2, 3, 4}; This introduces some tricky behavior that I don't yet fully understand. I demonstrate this in /practice/3/3020103_1_vector.cpp
